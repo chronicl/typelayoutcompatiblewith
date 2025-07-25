@@ -5,7 +5,7 @@ The address spaces are language specific. For example, for WGSL there are two ad
 [`WgslStorage`] and [`WgslUniform`].
 
 For a `TypeLayoutRecipe` to be "compatible with" an address space means that
-- the recipe is a **valid recipe** (for example the recipe of a struct with `Repr::Packed` and custom field align attribute is not valid, because custom field align attributes are not supported by `Repr::Packed`)
+- the recipe is a **valid** (for example the recipe of a struct with `Repr::Packed` and custom field align attribute is not valid, because custom field align attributes are not supported by `Repr::Packed`)
 - the type layout it produces **satisfies the layout requirements** of the address space
 - the recipe is **representable** in the target language
 
