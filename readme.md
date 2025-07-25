@@ -22,7 +22,7 @@ For example for wgsl we have
    so a recipe containing a PackedVector is not representable in wgsl.
 2. Wgsl has only one layout algorithm (`Repr::Wgsl`) - there is no choice between std140 and std430
    like in glsl - so to be representable in wgsl the type layout produced by the recipe
-   has to be the same as the one produced by the same recipe but using exclusively the `Repr::Wgsl` layout algorithm.
+   has to be the same as the one produced by the same recipe but using exclusively the `Repr::Wgsl` layout algorithm instead of the layout algorithms specified in the recipe.
 3. Wgsl only supports custom struct field attributes `#[align(N)]` and `#[size(N)]` currently.
 
 Currently the errors reflect the above description
