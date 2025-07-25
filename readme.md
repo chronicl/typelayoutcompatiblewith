@@ -24,3 +24,36 @@ For example for wgsl we have
    like in glsl - so to be representable in wgsl the type layout produced by the recipe
    has to be the same as the one produced by the same recipe but with exclusively `Repr::Wgsl`.
 3. Wgsl only supports custom struct field attributes `#[align(N)]` and `#[size(N)]` currently.
+
+Currently the errors reflect the above description
+```rust
+pub enum AddressSpaceError {
+    // error that can occur when cooking a `TypeLayoutRecipe`
+    InvalidRecipe(InvalidRecipe),
+    RequirementsNotSatisfied(RequirementsNotSatisfied),
+    NotRepresentable(NotRepresentable),
+}
+
+pub enum RequirementsNotSatisfied {
+    // wgsl doesn't support unsized uniform buffers
+    MustBeSized(TypeLayoutRecipe, AddressSpaceEnum),
+    LayoutError(LayoutError),
+    UnknownLayoutError(TypeLayoutRecipe, AddressSpaceEnum),
+}
+
+pub enum NotRepresentable {
+    // enum RecipeContains { CustomAlign, CustomSize, PackedVector }
+    MayNotContain(TypeLayoutRecipe, AddressSpaceEnum, RecipeContains),
+    LayoutError(LayoutError),
+    UnknownLayoutError(TypeLayoutRecipe, AddressSpaceEnum),
+}
+
+pub struct LayoutError {
+    recipe: TypeLayoutRecipe,
+    address_space: AddressSpaceEnum,
+    // LayoutMismatch is from `type_layout/eq.rs`
+    mismatch: LayoutMismatch,
+    colored: bool,
+}
+
+```
