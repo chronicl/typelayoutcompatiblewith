@@ -4,12 +4,12 @@ guarantee that the `TypeLayout` it produces is compatible with the specified `Ad
 The address spaces are language specific. For example, for WGSL there are two address spaces:
 [`WgslStorage`] and [`WgslUniform`].
 
-For a `TypeLayoutRecipe` to be "compatible with" an address space means that
+For a `TypeLayoutRecipe` to be `TypeLayoutCompatibleWith<AddressSpace>` requires that
 - the recipe is a **valid** (for example the recipe of a struct with `Repr::Packed` and custom field align attribute is not valid, because custom field align attributes are not supported by `Repr::Packed`)
 - the type layout it produces **satisfies the layout requirements** of the address space
 - the recipe is **representable** in the target language
 
-To be representable in a language means that the type layout recipe, can be expressed in the
+To be representable in a language means that the type layout recipe can be expressed in the
 language's type system:
 1. all types in the recipe can be expressed in the target language (for example `bool` or `PackedVector` can't be expressed in wgsl)
 2. the available layout algorithms in the target language can produce the same layout as the one produced by the recipe
